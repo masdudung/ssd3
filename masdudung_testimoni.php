@@ -96,27 +96,13 @@ class masdudung_testimoni
         if ( isset( $_POST['cf-deleted'] ) ) 
 		{
             $id = $_POST["cf-id"];
-            // cek blog_id
-            $testimonial_blog_id = $wpdb->get_results( 
-                "
-                SELECT blog_id 
-                FROM testimoni
-                WHERE id = $id",
-                OBJECT
-            );
+            
+            $wpdb->delete( 
+                'testimoni', 
+                array( 'id' => $id, 'blog_id'=>$blog_id ), 
+                array( '%d', '%d' ) );
+            echo "Data telah terhapus";
 			
-            if( is_array($testimonial_blog_id) ){
-				if( count($testimonial_blog_id) )
-				{
-					if($blog_id == $testimonial_blog_id[0]->blog_id){
-						$wpdb->delete( 'testimoni', array( 'id' => $id ), array( '%d' ) );
-            			echo "Data telah terhapus";
-					}else{
-						echo "terjadi kesalahan";
-					}
-				}
-			}
-
         }
         
         $testimonial = $wpdb->get_results( 
